@@ -1,0 +1,3 @@
+﻿student id,first_name,middle_name,last_name,gender,region,disability,department,year/section,cgpa,status
+STUCSV2026001,Abebe,Kebede,Tesfaye,Male,Amhara,None,Computer Science,Year 3,3.45,active
+STUCSV2026002,Marta,Ali,Mohammed,Female,Oromia,None,Computer Science,Year 2,3.20,active

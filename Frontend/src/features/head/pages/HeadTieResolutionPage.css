@@ -1,0 +1,242 @@
+
+.head-tie-resolution-page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 28px;
+  background: #f4f7fc;
+  color: #1e293b;
+  box-sizing: border-box;
+}
+
+.head-tie-resolution-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.head-tie-resolution-header span {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.head-tie-resolution-header h1 {
+  margin: 0 0 8px;
+  color: #142d59;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.head-tie-resolution-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.head-tie-resolution-header button,
+.head-tie-section-picker button,
+.head-tie-candidate button {
+  border: none;
+  border-radius: 8px;
+  padding: 11px 18px;
+  background: #1d4ed8;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.head-tie-resolution-header button:hover,
+.head-tie-section-picker button:hover,
+.head-tie-candidate button:hover {
+  background: #1e40af;
+}
+
+.head-tie-section-picker {
+  display: flex;
+  align-items: end;
+  gap: 14px;
+  padding: 20px;
+  margin-bottom: 24px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.head-tie-section-picker label {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.head-tie-section-picker input {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  outline: none;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.head-tie-section-picker input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgb(37 99 235 / 10%);
+}
+
+.head-tie-section-picker button:disabled,
+.head-tie-candidate button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.head-tie-message {
+  padding: 13px 16px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.head-tie-message.error {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.head-tie-message.success {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.head-tie-group {
+  min-width: 0;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 4%);
+}
+
+.head-tie-group h2 {
+  margin: 0 0 10px;
+  color: #142d59;
+  font-size: 19px;
+}
+
+.head-tie-group > p {
+  margin: 0 0 18px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.head-tie-candidates {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.head-tie-candidate {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+}
+
+.head-tie-photo,
+.head-tie-photo-placeholder {
+  width: 55px;
+  height: 55px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 50%;
+  background: #e2e8f0;
+}
+
+.head-tie-photo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  font-size: 10px;
+  text-align: center;
+}
+
+.head-tie-candidate-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.head-tie-candidate-details h3 {
+  margin: 0 0 5px;
+  color: #1e293b;
+  font-size: 15px;
+}
+
+.head-tie-candidate-details p {
+  margin: 3px 0;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.head-tie-candidate-details strong {
+  display: inline-block;
+  padding: 4px 8px;
+  margin-top: 5px;
+  border-radius: 20px;
+  background: #dcfce7;
+  color: #166534;
+  font-size: 11px;
+}
+
+.head-tie-candidate button {
+  flex-shrink: 0;
+  padding: 9px 12px;
+  font-size: 12px;
+}
+
+@media (max-width: 850px) {
+  .head-tie-resolution-page {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .head-tie-resolution-page {
+    padding: 16px;
+  }
+
+  .head-tie-resolution-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .head-tie-section-picker {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .head-tie-candidate {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .head-tie-candidate button {
+    width: 100%;
+  }
+}
+c

@@ -1,0 +1,130 @@
+
+.director-sidebar {
+  width: 260px;
+  min-width: 260px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #173b70 0%, #102e59 100%);
+  color: #ffffff;
+  padding: 24px 16px;
+  box-sizing: border-box;
+}
+
+.director-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 10px 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.director-sidebar-logo {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #173b70;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.director-sidebar-brand h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.director-sidebar-brand p {
+  margin: 4px 0 0;
+  color: #c7d8f1;
+  font-size: 12px;
+}
+
+.director-sidebar-heading {
+  margin: 28px 10px 12px;
+  color: #a9c1e2;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.director-sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.director-sidebar-link {
+  width: 100%;
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 10px 13px;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: #e3ecf8;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.director-sidebar-link:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.director-sidebar-link.active {
+  background: #2672df;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.director-sidebar-icon {
+  width: 22px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.director-sidebar-bottom {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.director-sidebar-logout {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 12px 13px;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: #ffffff;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.director-sidebar-logout:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.director-sidebar-logout span {
+  font-size: 19px;
+}
+
+@media (max-width: 768px) {
+  .director-sidebar {
+    width: 220px;
+    min-width: 220px;
+  }
+}

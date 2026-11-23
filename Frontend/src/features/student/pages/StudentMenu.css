@@ -1,0 +1,307 @@
+.student-menu {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 24px 14px 18px;
+  overflow-y: auto;
+  background: linear-gradient(180deg, var(--student-navy, #173b70), #102e59);
+  color: #fff;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.student-menu-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 8px 24px;
+  border-bottom: 1px solid rgb(255 255 255 / 18%);
+}
+
+.student-menu-heading-icon {
+  display: grid;
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 2px solid rgb(255 255 255 / 85%);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 10%);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.student-menu-heading strong,
+.student-menu-heading small {
+  display: block;
+}
+
+.student-menu-heading strong {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.student-menu-heading small {
+  margin-top: 4px;
+  color: #c6d8f2;
+  font-size: 12px;
+}
+
+.student-menu-label {
+  margin: 22px 10px 10px;
+  color: #c2d3ec;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.student-menu-list {
+  display: grid;
+  gap: 5px;
+}
+
+.student-menu-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: #e6eefb;
+  text-align: left;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.student-menu-button:hover {
+  background: rgb(255 255 255 / 10%);
+  color: #fff;
+}
+
+.student-menu-button.active {
+  border-color: rgb(255 255 255 / 10%);
+  background: #2672df;
+  color: #fff;
+}
+
+.student-menu-icon {
+  display: grid;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 7px;
+  color: #d6e4f8;
+  font-size: 18px;
+}
+
+.student-menu-button.active .student-menu-icon {
+  color: #fff;
+}
+
+.student-menu-button-label {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.student-menu-arrow {
+  margin-left: auto;
+  color: #b9cce8;
+  font-size: 21px;
+  line-height: 1;
+}
+
+.student-menu-button.active .student-menu-arrow {
+  color: #fff;
+}
+
+.student-menu-footer {
+  margin-top: auto;
+  padding: 18px 8px 4px;
+  border-top: 1px solid rgb(255 255 255 / 18%);
+  color: #c2d3ec;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+@media (max-width: 850px) {
+  .student-menu {
+    position: static;
+    min-height: auto;
+    padding: 16px;
+  }
+
+  .student-menu-heading {
+    padding-bottom: 16px;
+  }
+
+  .student-menu-label {
+    margin-top: 16px;
+  }
+
+  .student-menu-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .student-menu-footer {
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 520px) {
+  .student-menu-list {
+    grid-template-columns: 1fr;
+  }
+}
+/* Floating Chat Assistant */
+.student-chat-widget {
+  position: fixed;
+  left: 25px;
+  bottom: 25px;
+  z-index: 1000;
+}
+
+.student-chat-floating-button {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border: none;
+  border-radius: 50%;
+  background: #1d4ed8;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  box-shadow: 0 6px 22px rgba(20, 50, 100, 0.3);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.student-chat-floating-button:hover {
+  background: #153eaa;
+  transform: scale(1.07);
+}
+
+.student-chat-window {
+  position: absolute;
+  left: 0;
+  bottom: 78px;
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  height: 430px;
+  max-height: calc(100vh - 120px);
+  overflow: hidden;
+  border: 1px solid #dce5f1;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 12px 40px rgba(20, 40, 80, 0.2);
+}
+
+.student-chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px;
+  background: #173b6c;
+  color: white;
+}
+
+.student-chat-header strong,
+.student-chat-header small {
+  display: block;
+}
+
+.student-chat-header small {
+  margin-top: 5px;
+  color: #d5e3f7;
+  font-size: 12px;
+}
+
+.student-chat-close {
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 27px;
+  cursor: pointer;
+}
+
+.student-chat-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px;
+  background: #f7f9fc;
+}
+
+.student-chat-welcome {
+  padding: 14px;
+  border-radius: 12px 12px 12px 3px;
+  background: white;
+  color: #26364b;
+  line-height: 1.6;
+  box-shadow: 0 2px 8px rgba(20, 40, 80, 0.06);
+}
+
+.student-chat-notice {
+  margin-top: 16px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.student-chat-form {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid #e5eaf1;
+}
+
+.student-chat-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 11px;
+  border: 1px solid #d5dce7;
+  border-radius: 8px;
+  font: inherit;
+}
+
+.student-chat-form button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #1d4ed8;
+  color: white;
+  font-weight: 700;
+}
+
+.student-chat-form button:disabled,
+.student-chat-form input:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@media (max-width: 480px) {
+  .student-chat-window {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 90px;
+    width: auto;
+  }
+
+  .student-chat-widget {
+    left: 16px;
+    bottom: 16px;
+  }
+}

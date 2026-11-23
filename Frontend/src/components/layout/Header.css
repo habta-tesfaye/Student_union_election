@@ -1,0 +1,78 @@
+
+.director-header {
+  width: 100%;
+  min-height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px 30px;
+  background: #ffffff;
+  border-bottom: 1px solid #e7edf5;
+  box-sizing: border-box;
+}
+
+.director-header-title h1 {
+  margin: 0;
+  color: #173b70;
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.director-header-title p {
+  margin: 6px 0 0;
+  color: #718096;
+  font-size: 13px;
+}
+
+.director-header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.director-header-campus {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.director-header-campus-name {
+  color: #263b59;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.director-header-campus-location {
+  color: #7b8798;
+  font-size: 12px;
+}
+
+.director-header-avatar {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e5efff;
+  color: #1d5eae;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .director-header {
+    padding: 14px 16px;
+    align-items: flex-start;
+  }
+
+  .director-header-title h1 {
+    font-size: 19px;
+  }
+
+  .director-header-campus {
+    display: none;
+  }
+}
