@@ -1,3 +1,4 @@
+
 import mongoose, { Schema } from "mongoose";
 
 /**
@@ -26,9 +27,6 @@ export interface NominationDocument {
   updatedAt: Date;
 }
 
-/**
- * MongoDB nomination schema.
- */
 const nominationSchema = new Schema<NominationDocument>(
   {
     nominatorStudentId: {
@@ -97,27 +95,13 @@ const nominationSchema = new Schema<NominationDocument>(
   }
 );
 
-/**
- * Prevent duplicate nominations for the same nominee.
- */
+// Prevent a student from being nominated more than once.
 nominationSchema.index(
   { nomineeStudentId: 1 },
   { unique: true }
 );
 
-/**
- * Automatically update updatedAt when a document is saved.
- */
-nominationSchema.pre("save", function () {
-  this.updatedAt = new Date();
-});
-
-/**
- * Create or reuse the Mongoose model.
- */
+// Create the model only once.
 export const Nomination =
   mongoose.models.Nomination ||
-  mongoose.model<NominationDocument>(
-    "Nomination",
-    nominationSchema
-  );
+  mongoose.model<NominationDocument>("Nomination", nominationSchema);

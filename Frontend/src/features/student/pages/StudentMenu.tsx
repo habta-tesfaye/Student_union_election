@@ -10,6 +10,7 @@ export type StudentSection =
   | "voting"
   | "results"
   | "notifications"
+    | "notices"
   | "feedback"
   | "chat";
 
@@ -35,7 +36,8 @@ const menuItems: {
   { id: "candidates", label: "Candidates", icon: "♙" },
   { id: "voting", label: "Voting", icon: "✓" },
   { id: "results", label: "Election Results", icon: "▥" },
-  { id: "notifications", label: "Notifications", icon: "♢" },
+{ id: "notices", label: "View Notices", icon: "📢" },
+{ id: "notifications", label: "Notifications", icon: "♢" },
   { id: "feedback", label: "Feedback", icon: "✉" },
   { id: "chat", label: "Chat Assistant", icon: "●" },
 ];

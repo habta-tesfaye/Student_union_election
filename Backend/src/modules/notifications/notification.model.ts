@@ -9,7 +9,8 @@ export type NotificationType =
   | "voting"
   | "result"
   | "notice"
-  | "general";
+  | "general"
+  | "winner_submission";
 
 export interface NotificationDocument {
   recipientId: string;
@@ -62,6 +63,7 @@ const notificationSchema = new Schema<NotificationDocument>(
         "result",
         "notice",
         "general",
+        "winner_submission",
       ],
       default: "general",
       required: true,

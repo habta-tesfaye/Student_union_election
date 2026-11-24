@@ -12,6 +12,8 @@ const headMenuItems = [
   { id: "nominations", label: "Department Nominations", icon: "✎" },
   { id: "candidates", label: "Candidate Information", icon: "♙" },
   { id: "tie-resolution", label: "Tie Resolution", icon: "⚖️" },
+  { id: "notices", label: "Department Notices", icon: "📢" },
+  { id: "send-to-ssd", label: "Send Winners to SSD", icon: "📨" },
 ];
 
 function HeadSidebar({

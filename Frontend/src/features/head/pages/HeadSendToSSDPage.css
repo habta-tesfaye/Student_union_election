@@ -1,0 +1,346 @@
+
+.ssd-page {
+  min-height: 100vh;
+  padding: 32px;
+  background: #f4f7fb;
+  color: #183451;
+}
+
+.ssd-header {
+  margin-bottom: 28px;
+}
+
+.ssd-back-button {
+  border: 0;
+  background: transparent;
+  color: #245c91;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 24px;
+}
+
+.ssd-heading h1 {
+  margin: 8px 0;
+  color: #102b50;
+  font-size: 30px;
+}
+
+.ssd-heading p {
+  color: #64748b;
+  margin: 0;
+}
+
+.ssd-eyebrow {
+  color: #3678b8;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.ssd-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.ssd-summary-card {
+  background: white;
+  padding: 22px;
+  border-radius: 12px;
+  border: 1px solid #e2eaf3;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ssd-summary-card span {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.ssd-summary-card strong {
+  color: #102b50;
+  font-size: 28px;
+}
+
+.ssd-schedule {
+  background: white;
+  border: 1px solid #e2eaf3;
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.ssd-schedule h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.ssd-schedule p {
+  color: #64748b;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.ssd-schedule-open,
+.ssd-schedule-closed,
+.ssd-submitted-status,
+.ssd-pending-status {
+  display: inline-block;
+  padding: 7px 11px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ssd-schedule-open,
+.ssd-submitted-status {
+  background: #e2f6eb;
+  color: #187344;
+}
+
+.ssd-schedule-closed,
+.ssd-pending-status {
+  background: #fff2dd;
+  color: #98600b;
+}
+
+.ssd-sections > h2 {
+  color: #102b50;
+  font-size: 21px;
+  margin-bottom: 18px;
+}
+
+.ssd-section-card {
+  background: white;
+  border: 1px solid #e2eaf3;
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 20px;
+}
+
+.ssd-section-card > h3 {
+  color: #245c91;
+  margin: 0 0 18px;
+  font-size: 18px;
+}
+
+.ssd-winner-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.ssd-winner-card {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  background: #f8fafd;
+  border: 1px solid #e7edf5;
+  border-radius: 10px;
+  min-width: 0;
+}
+
+.ssd-winner-photo {
+  width: 105px;
+  height: 125px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #e7edf5;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.ssd-winner-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ssd-winner-details {
+  min-width: 0;
+  flex: 1;
+}
+
+.ssd-winner-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.ssd-gender-label {
+  color: #3678b8;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ssd-winner-details h3 {
+  color: #102b50;
+  font-size: 16px;
+  margin: 10px 0 4px;
+}
+
+.ssd-student-id {
+  color: #64748b;
+  font-size: 13px;
+  margin: 0 0 14px;
+}
+
+.ssd-winner-information {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.ssd-winner-information div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ssd-winner-information span {
+  color: #64748b;
+  font-size: 11px;
+}
+
+.ssd-winner-information strong {
+  color: #183451;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.ssd-manual-winner {
+  display: inline-block;
+  margin-top: 12px;
+  color: #7651a8;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ssd-no-winner,
+.ssd-empty,
+.ssd-loading {
+  padding: 24px;
+  background: white;
+  border: 1px dashed #cbd5e1;
+  border-radius: 10px;
+  color: #64748b;
+  text-align: center;
+}
+
+.ssd-alert {
+  padding: 15px 18px;
+  border-radius: 9px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.ssd-alert-success {
+  background: #e7f7ed;
+  color: #17683d;
+  border: 1px solid #bce5ca;
+}
+
+.ssd-alert-error {
+  background: #fff0f0;
+  color: #a52a2a;
+  border: 1px solid #f0caca;
+}
+
+.ssd-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;
+  padding-bottom: 30px;
+}
+
+.ssd-actions button {
+  border: 0;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ssd-print-button {
+  background: #e8eef6;
+  color: #183451;
+}
+
+.ssd-submit-button {
+  background: #1769aa;
+  color: white;
+}
+
+.ssd-done-button {
+  background: #e2f6eb;
+  color: #187344;
+  cursor: not-allowed !important;
+}
+
+.ssd-actions button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 900px) {
+  .ssd-winner-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .ssd-page {
+    padding: 18px;
+  }
+
+  .ssd-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .ssd-schedule {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .ssd-winner-card {
+    flex-direction: column;
+  }
+
+  .ssd-actions {
+    flex-direction: column;
+  }
+
+  .ssd-actions button {
+    width: 100%;
+  }
+}
+
+@media print {
+  .ssd-page {
+    padding: 0;
+    background: white;
+  }
+
+  .ssd-back-button,
+  .ssd-actions {
+    display: none !important;
+  }
+
+  .ssd-section-card,
+  .ssd-winner-card {
+    break-inside: avoid;
+  }
+}

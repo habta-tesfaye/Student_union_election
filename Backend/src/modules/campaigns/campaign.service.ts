@@ -38,11 +38,11 @@ export async function getAllCampaigns() {
   const campaigns = await Campaign.find()
     .sort({ createdAt: 1 })
     .lean();
-  return campaigns.sort(
-    (a, b) =>
-      statusOrder[a.status as CampaignStatus] -
-      statusOrder[b.status as CampaignStatus]
-  );
+return campaigns.sort(
+  (a, b) =>
+    statusOrder[a.status as CampaignStatus] -
+    statusOrder[b.status as CampaignStatus]
+);
 }
 
 export async function getCampaignById(campaignId: string) {

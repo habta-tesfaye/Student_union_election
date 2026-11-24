@@ -7,9 +7,9 @@ import {
   type HeadDepartmentStudent,
 } from "../head-students.api";
 import HeadTieResolutionPage from "./HeadTieResolutionPage";
-
+import HeadNoticesPage from "./HeadNoticesPage";
 import { getDepartmentNominations } from "../../nominations/services/nomination.api";
-
+import HeadSendToSSDPage from "./HeadSendToSSDPage";
 import type { Nomination } from "../../nominations/types/nomination.types";
 
 import HeadSidebar from "../components/HeadSidebar";
@@ -175,6 +175,20 @@ function HeadDashboardPage() {
 if (activePage === "tie-resolution") {
   return (
     <HeadTieResolutionPage
+      onBack={() => setActivePage("dashboard")}
+    />
+  );
+}
+if (activePage === "notices") {
+  return (
+    <HeadNoticesPage
+      onBack={() => setActivePage("dashboard")}
+    />
+  );
+}
+if (activePage === "send-to-ssd") {
+  return (
+    <HeadSendToSSDPage
       onBack={() => setActivePage("dashboard")}
     />
   );

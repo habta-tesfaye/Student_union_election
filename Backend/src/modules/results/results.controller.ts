@@ -5,6 +5,10 @@ import {
   getParliamentResults,
 } from "./results.service.js";
 
+import {
+  previewHeadWinners,
+  submitHeadWinners,
+} from "./head-winner-submission.service.js";
 /**
  * GET /api/results/class
  */
@@ -106,6 +110,114 @@ export async function getParliamentElectionResults(
     res.status(500).json({
       success: false,
       message: "Failed to retrieve parliament results.",
+    });
+  }
+}
+/**
+ * GET /api/results/head-winners
+ * Head-only preview of male and female winners by section.
+ */
+export async function getHeadWinnersPreview(
+  req: Request,
+  res: Response
+): Promise<void> {
+  try {
+    if (!req.user || req.user.role !== "head") {
+      res.status(403).json({
+        success: false,
+        message: "Only Department Heads can preview finalized winners.",
+      });
+      return;
+    }
+
+    const department = req.user.department?.trim();
+
+    if (!department) {
+      res.status(400).json({
+        success: false,
+        message: "Department is not configured.",
+      });
+      return;
+    }
+
+    const data = await previewHeadWinners(department);
+
+    res.status(200).json({
+      success: true,
+      message: "Department winners preview retrieved successfully.",
+      data,
+    });
+  } catch (error) {
+    console.error("Get Head winners preview error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to retrieve department winners preview.",
+    });
+  }
+}
+
+/**
+ * POST /api/results/head-winners/submit
+ * Head-only finalization and submission to Parliament.
+ */
+export async function submitHeadWinnersToSSD(
+  req: Request,
+  res: Response
+): Promise<void> {
+  try {
+    if (!req.user || req.user.role !== "head") {
+      res.status(403).json({
+        success: false,
+        message: "Only Department Heads can submit finalized winners.",
+      });
+      return;
+    }
+
+    const department = req.user.department?.trim();
+
+    if (!department) {
+      res.status(400).json({
+        success: false,
+        message: "Department is not configured.",
+      });
+      return;
+    }
+
+    const headName = [
+      req.user.firstName,
+      req.user.middleName,
+      req.user.lastName,
+    ]
+      .filter(Boolean)
+      .join(" ");
+
+    const data = await submitHeadWinners(department, headName);
+
+    res.status(200).json({
+      success: true,
+      message: data.message,
+      data,
+    });
+  } catch (error) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Failed to submit department winners.";
+
+    if (message === "Winner submission is closed at this time.") {
+      res.status(403).json({
+        success: false,
+        message,
+      });
+      return;
+    }
+
+    console.error("Submit Head winners error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to submit department winners.",
     });
   }
 }

@@ -10,6 +10,7 @@ import StudentClassmatesSection from "../components/StudentClassmatesSection";
 import StudentCandidatesSection from "../components/StudentCandidatesSection";
 import StudentResultsSection from "../components/StudentResultsSection";
 import StudentNotificationsSection from "../components/StudentNotificationsSection";
+import StudentNoticesSection from "../components/StudentNoticesSection";
 import StudentFeedbackSection from "../components/StudentFeedbackSection";
 
 import { submitNomination } from "../../nominations/services/nomination.api";
@@ -624,6 +625,9 @@ function StudentDashboardPage() {
                 />
               )}
 
+{activeSection === "notices" && (
+  <StudentNoticesSection />
+)}
               {activeSection === "feedback" && (
                 <StudentFeedbackSection />
               )}{activeSection === "chat" && (
