@@ -5,7 +5,11 @@ import { useAuthContext } from "../../../context/AuthContext";
 import { api } from "../../../services/api";
 import MainLayout from "../../../components/layout/MainLayout";
 import ElectionScheduleManager from "../../elections/components/ElectionScheduleManager";
+import DirectorNoticesPage from "./DirectorNoticesPage";
+import DisciplinePage from "../../discipline/pages/DisciplinePage";
+import DirectorNotifications from "../components/DirectorNotifications";
 
+import HeadWinnerSubmissions from "../components/HeadWinnerSubmissions";
 interface DisciplineRecord {
   _id: string;
   studentId?: string;
@@ -210,9 +214,25 @@ export default function DirectorDashboardPage() {
             <ElectionScheduleManager />
           </section>
         )}
+        {activePage === "notices" && (
+  <section className="dashboard-content">
+    <DirectorNoticesPage />
+  </section>
+)}{activePage === "notifications" && <DirectorNotifications />}
 
-        {activePage !== "dashboard" &&
-          activePage !== "schedules" && (
+{activePage === "discipline" && (
+  <section className="dashboard-content">
+    <DisciplinePage />
+  </section>
+)}
+{activePage === "winner-submissions" && <HeadWinnerSubmissions />}
+
+     
+ {activePage === "notifications" && <DirectorNotifications />}    
+      {activePage !== "dashboard" &&
+  activePage !== "schedules" &&
+  activePage !== "notices" &&
+  activePage !== "discipline" && (
             <section className="dashboard-content">
               <h2>
                 {activePage.charAt(0).toUpperCase() +

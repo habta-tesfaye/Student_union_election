@@ -1,0 +1,158 @@
+.director-notifications {
+  width: 100%;
+  min-width: 0;
+  padding: 24px;
+  color: #172b4d;
+}
+
+.director-notifications .dashboard-panel {
+  width: 100%;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #e4eaf2;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(25, 50, 90, 0.06);
+}
+
+.director-notifications .dashboard-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e8edf5;
+}
+
+.director-notifications h2 {
+  margin: 0 0 8px;
+  color: #123568;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.director-notifications .dashboard-panel-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.director-notifications > .dashboard-panel > p {
+  margin: 16px 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.director-notifications strong {
+  color: #1d4ed8;
+}
+
+.director-notifications button {
+  margin: 2px 4px 2px 0;
+  padding: 9px 14px;
+  color: #ffffff;
+  background: #1d4ed8;
+  border: 0;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.director-notifications button:hover:not(:disabled) {
+  background: #1e40af;
+  transform: translateY(-1px);
+}
+
+.director-notifications button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.director-notifications button:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 3px;
+}
+
+.director-notifications .dashboard-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.director-notifications .dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  font-size: 14px;
+}
+
+.director-notifications .dashboard-table thead {
+  background: #eff6ff;
+}
+
+.director-notifications .dashboard-table th {
+  padding: 14px 16px;
+  color: #1e3a5f;
+  text-align: left;
+  white-space: nowrap;
+  font-weight: 700;
+  border-bottom: 1px solid #dbe5f1;
+}
+
+.director-notifications .dashboard-table td {
+  padding: 14px 16px;
+  color: #475569;
+  vertical-align: top;
+  line-height: 1.5;
+  border-bottom: 1px solid #edf1f6;
+}
+
+.director-notifications .dashboard-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.director-notifications .dashboard-table tbody tr:hover {
+  background: #f8fbff;
+}
+
+.director-notifications .dashboard-table td:first-child {
+  color: #1e3a5f;
+  font-weight: 600;
+}
+
+.director-notifications p[role="alert"] {
+  padding: 14px 16px;
+  color: #991b1b;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .director-notifications {
+    padding: 12px;
+  }
+
+  .director-notifications .dashboard-panel {
+    padding: 18px;
+  }
+
+  .director-notifications .dashboard-panel-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .director-notifications h2 {
+    font-size: 21px;
+  }
+
+  .director-notifications .dashboard-table {
+    min-width: 760px;
+  }
+}

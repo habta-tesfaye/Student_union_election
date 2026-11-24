@@ -1,14 +1,16 @@
-
 import "./App.css";
 
 import { useAuthContext } from "./context/AuthContext";
-import StudentDashboardPage from "./features/student/pages/StudentDashboardPage";
 
+// Dashboard pages
+import StudentDashboardPage from "./features/student/pages/StudentDashboardPage";
+import CandidateDashboardPage from "./features/candidates/pages/CandidateDashboardPage";
 import AdminDashboardPage from "./features/admin/pages/AdminDashboardPage";
 import RegistrarDashboardPage from "./features/registrar/pages/RegistrarDashboardPage";
 import DirectorDashboardPage from "./features/director/pages/DirectorDashboardPage";
 import HeadDashboardPage from "./features/head/pages/HeadDashboardPage";
 
+// Authentication pages
 import ForgotPasswordPage from "./features/auth/pages/ForgotPasswordPage";
 import LoginPage from "./features/auth/pages/LoginPage";
 
@@ -17,95 +19,87 @@ function App() {
 
   const currentPath = window.location.pathname;
 
-  // Display the appropriate dashboard for authenticated staff.
+  // Authenticated user dashboards
   if (isAuthenticated && user) {
-    if (user.role === "admin") {
-      return <AdminDashboardPage />;
+    switch (user.role) {
+      case "admin":
+        return <AdminDashboardPage />;
+
+      case "student":
+        return <StudentDashboardPage />;
+
+      case "candidate":
+        return <CandidateDashboardPage />;
+
+      case "registrar":
+        return <RegistrarDashboardPage />;
+
+      case "director":
+        return <DirectorDashboardPage />;
+
+      case "head":
+        return <HeadDashboardPage />;
+
+      default: {
+        const displayName = [
+          user.firstName,
+          user.middleName,
+          user.lastName,
+        ]
+          .filter(Boolean)
+          .join(" ");
+
+        return (
+          <main className="app">
+            <header className="app-header">
+              <div className="app-brand">
+                <div className="app-logo">DMU</div>
+
+                <div className="app-brand-text">
+                  <h1>Debre Markos University</h1>
+                  <p>Bure Campus</p>
+                </div>
+              </div>
+
+              <span className="app-system-label">
+                Student Union Election System
+              </span>
+            </header>
+
+            <section className="welcome-section">
+              <div className="welcome-content">
+                <span className="welcome-badge">{user.role}</span>
+
+                <h2>Welcome, {displayName || "User"}</h2>
+
+                <p className="welcome-description">
+                  You have signed in successfully. Your dashboard
+                  will be available according to your assigned role.
+                </p>
+
+                <button
+                  className="welcome-login-link"
+                  type="button"
+                  onClick={() => void signOut()}
+                >
+                  Sign out
+                </button>
+              </div>
+            </section>
+
+            <footer className="app-footer">
+              <p>
+                © {new Date().getFullYear()} Debre Markos University,
+                Bure Campus. Student Union Election System.
+              </p>
+            </footer>
+          </main>
+        );
+      }
     }
-if (user.role === "student") {
-  return <StudentDashboardPage />;
-}
-    if (user.role === "registrar") {
-      return <RegistrarDashboardPage />;
-    }
-
-    if (user.role === "director") {
-      return <DirectorDashboardPage />;
-    }
-
-    if (user.role === "head") {
-      return <HeadDashboardPage />;
-    }
-
-    // Student / voter welcome page.
-    const displayName = [
-      user.firstName,
-      user.middleName,
-      user.lastName,
-    ]
-      .filter(Boolean)
-      .join(" ");
-
-    const roleLabels: Record<string, string> = {
-      student: "Student / Voter",
-      admin: "System Administrator",
-      registrar: "Registrar",
-      director: "SSD",
-      head: "Department Head",
-    };
-
-    return (
-      <main className="app">
-        <header className="app-header">
-          <div className="app-brand">
-            <div className="app-logo">DMU</div>
-
-            <div className="app-brand-text">
-              <h1>Debre Markos University</h1>
-              <p>Bure Campus</p>
-            </div>
-          </div>
-
-          <span className="app-system-label">
-            Student Union Election System
-          </span>
-        </header>
-
-        <section className="welcome-section">
-          <div className="welcome-content">
-            <span className="welcome-badge">
-              {roleLabels[user.role] ?? user.role}
-            </span>
-
-            <h2>Welcome, {displayName || "User"}</h2>
-
-            <p className="welcome-description">
-              You have signed in successfully. This is your role-based
-              starting page. We will connect the available system features
-              here step by step.
-            </p>
-
-            <button
-              className="welcome-login-link"
-              type="button"
-              onClick={signOut}
-            >
-              Sign out
-            </button>
-          </div>
-        </section>
-
-        <footer className="app-footer">
-          <p>
-            © {new Date().getFullYear()} Debre Markos University, Bure Campus.
-            Student Union Election System.
-          </p>
-        </footer>
-      </main>
-    );
   }
 
-  // Pages available when the user is not signed in.
+  // Public authentication pages
   if (currentPath === "/login") {
     return <LoginPage />;
   }
@@ -114,7 +108,7 @@ if (user.role === "student") {
     return <ForgotPasswordPage />;
   }
 
-  // Public welcome page.
+  // Public welcome page
   return (
     <main className="app">
       <header className="app-header">
@@ -144,8 +138,8 @@ if (user.role === "student") {
 
           <p className="welcome-description">
             A centralized digital platform for managing student union
-            elections, candidate nominations, voting, examinations, campaigns
-            and election results.
+            elections, candidate nominations, voting, examinations,
+            campaigns and election results.
           </p>
 
           <div className="welcome-status">
@@ -162,8 +156,8 @@ if (user.role === "student") {
           <h3>Election Management Platform</h3>
 
           <p>
-            The system supports the actors defined in the original system
-            requirements:
+            The system supports the actors defined in the original
+            system requirements:
           </p>
 
           <ul>
@@ -179,8 +173,8 @@ if (user.role === "student") {
 
       <footer className="app-footer">
         <p>
-          © {new Date().getFullYear()} Debre Markos University, Bure Campus.
-          Student Union Election System.
+          © {new Date().getFullYear()} Debre Markos University,
+          Bure Campus. Student Union Election System.
         </p>
       </footer>
     </main>

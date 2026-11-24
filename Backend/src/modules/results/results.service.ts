@@ -3,7 +3,7 @@ import { Candidate } from "../candidates/candidate.model.js";
 import { Vote } from "../voting/vote.model.js";
 import { StudentAccount } from "../auth/auth.model.js";
 import { Phase3Parliament } from "../parliament/phase3-parliament.model.js";
-
+import { HeadWinner } from "../parliament/head-winner.model.js";
 interface ClassCandidateResult {
   studentId: string;
   photo: string;
@@ -378,4 +378,42 @@ export async function getParliamentResults() {
       : [],
     results: isFinalized ? results : [],
   };
+}
+/**
+ * Get active winners submitted by Department Heads.
+ * Winner records contain student IDs, so join them with student accounts.
+ */
+export async function getHeadWinnerReview() {
+  const winners = await HeadWinner.find({ status: "active" })
+    .select("student_id status")
+    .lean();
+
+  const studentIds = winners.map((winner) => winner.student_id);
+
+  const students = await StudentAccount.find({
+    studentId: { $in: studentIds },
+  })
+    .select(
+      "studentId firstName middleName lastName gender department yearSection"
+    )
+    .lean();
+
+  const studentMap = new Map(
+    students.map((student) => [student.studentId, student])
+  );
+
+  return winners.map((winner) => {
+    const student = studentMap.get(winner.student_id);
+
+    return {
+      studentId: winner.student_id,
+      status: winner.status,
+      firstName: student?.firstName ?? "",
+      middleName: student?.middleName ?? "",
+      lastName: student?.lastName ?? "",
+      gender: student?.gender ?? "",
+      department: student?.department ?? "",
+      yearSection: student?.yearSection ?? "",
+    };
+  });
 }

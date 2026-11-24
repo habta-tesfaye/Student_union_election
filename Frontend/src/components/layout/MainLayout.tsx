@@ -29,6 +29,7 @@ function MainLayout({
     results: "Election Results",
     notifications: "Notifications",
     discipline: "Discipline",
+    notices: "Notices",
   };
 
   return (

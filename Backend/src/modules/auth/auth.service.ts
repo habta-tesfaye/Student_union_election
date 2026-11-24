@@ -2,6 +2,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+import { HeadWinner } from "../parliament/head-winner.model.js";
 import { StudentAccount, StaffAccount } from "./auth.model.js";
 import { LoginLog } from "../admin/login-log.model.js";
 
@@ -19,6 +20,7 @@ export interface LoginMetadata {
 
 /**
  * Authenticate a student or staff member.
+ * Identify Head-submitted Parliament members as candidates.
  */
 export class AuthService {
   async login(
@@ -48,10 +50,21 @@ export class AuthService {
         throw new Error("Invalid ID or password");
       }
 
+      // Check whether the student was submitted to Parliament by the Head.
+      const headWinner = await HeadWinner.findOne({
+        student_id: student.studentId,
+        status: "active",
+      });
+
+      // Parliament members receive the candidate role.
+      const studentRole: "student" | "candidate" = headWinner
+        ? "candidate"
+        : "student";
+
       const user: AuthenticatedUser = {
         id: student._id.toString(),
         accountType: "student",
-        role: "student",
+        role: studentRole,
         studentId: student.studentId,
         firstName: student.firstName,
         middleName: student.middleName,
@@ -59,20 +72,21 @@ export class AuthService {
         department: student.department,
       };
 
+      // Create JWT token using the identified role.
       const payload: AuthTokenPayload = {
         sub: user.id,
         accountType: "student",
-        role: "student",
+        role: studentRole,
       };
 
       const accessToken = jwt.sign(payload, jwtSecret, {
         expiresIn: "15m",
       });
 
-      // Record successful student login.
+      // Record successful student or candidate login.
       await LoginLog.create({
         userIdentifier: student.studentId,
-        userRole: "student",
+        userRole: studentRole,
         accountType: "student",
         loginTime: new Date(),
         ipAddress: metadata.ipAddress,

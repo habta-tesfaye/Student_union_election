@@ -1,7 +1,6 @@
 export type StaffRole = "admin" | "head" | "registrar" | "director";
 
-export type UserRole = StaffRole | "student";
-
+export type UserRole = StaffRole | "student" | "candidate";
 export type AccountType = "student" | "staff";
 
 export interface AuthenticatedUser {

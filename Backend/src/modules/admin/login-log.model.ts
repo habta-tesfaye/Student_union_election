@@ -23,8 +23,7 @@ const loginLogSchema = new Schema<LoginLogDocument>(
     userRole: {
       type: String,
       required: true,
-      enum: ["admin", "head", "registrar", "director", "student"],
-    },
+enum: ["admin", "head", "registrar", "director", "student", "candidate"],    },
 
     accountType: {
       type: String,

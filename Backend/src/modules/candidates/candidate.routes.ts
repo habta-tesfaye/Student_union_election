@@ -5,6 +5,7 @@ import { authorize } from "../../middlewares/authorize.js";
 
 import {
   getAllCandidates,
+  getMyCandidate,
   getCandidateByStudentId,
   selectManualClassWinner,
 } from "./candidate.controller.js";
@@ -13,6 +14,14 @@ const router = Router();
 
 // All candidate routes require authentication.
 router.use(authenticate);
+
+// Candidates can view only their own profile.
+// Keep this route before "/:studentId".
+router.get(
+  "/me",
+  authorize("candidate"),
+  getMyCandidate
+);
 
 // Students view candidates in their own department and section.
 router.get(

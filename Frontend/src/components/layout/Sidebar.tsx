@@ -18,7 +18,9 @@ const menuItems = [
   { id: "parliament", label: "Parliament", icon: "🏛" },
   { id: "results", label: "Election Results", icon: "▥" },
   { id: "notifications", label: "Notifications", icon: "♧" },
+  { id: "winner-submissions", label: "Head Winner Submissions", icon: "♙" },
   { id: "discipline", label: "Discipline", icon: "⚖" },
+  { id: "notices", label: "Notices", icon: "📢" },
 ];
 
 function Sidebar({

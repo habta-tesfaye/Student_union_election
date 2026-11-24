@@ -1,0 +1,152 @@
+
+/* =====================================
+   CANDIDATE SIDEBAR MENU
+===================================== */
+
+.candidate-sidebar {
+  width: 260px;
+  min-width: 260px;
+  min-height: 100vh;
+  background: #10264a;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+}
+
+/* University Branding */
+
+.candidate-sidebar-brand {
+  padding: 25px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.candidate-sidebar-brand h2 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.candidate-sidebar-brand p {
+  margin: 8px 0 0;
+  color: #b9c9e2;
+  font-size: 12px;
+}
+
+.candidate-portal-name {
+  display: block;
+  margin-top: 18px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Navigation */
+
+.candidate-navigation {
+  flex: 1;
+  padding: 18px 12px;
+}
+
+.candidate-menu-heading {
+  padding: 0 12px;
+  margin: 0 0 12px;
+  color: #91a9cc;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.candidate-menu-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  margin-bottom: 5px;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: #d3deee;
+  text-align: left;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.candidate-menu-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+.candidate-menu-item.active {
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.candidate-menu-icon {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+}
+
+/* Sign Out */
+
+.candidate-sidebar-footer {
+  padding: 15px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.candidate-signout-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: none;
+  border-radius: 7px;
+  background: rgba(239, 68, 68, 0.12);
+  color: #fecaca;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.candidate-signout-button:hover {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .candidate-sidebar {
+    width: 230px;
+    min-width: 230px;
+  }
+}
+
+@media (max-width: 650px) {
+  .candidate-sidebar {
+    width: 100%;
+    min-width: 100%;
+    min-height: auto;
+  }
+
+  .candidate-navigation {
+    padding: 12px;
+  }
+
+  .candidate-menu-item {
+    padding: 13px;
+  }
+}

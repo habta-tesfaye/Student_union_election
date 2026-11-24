@@ -10,8 +10,7 @@ export type StaffRole =
   | "registrar"
   | "director";
 
-export type UserRole = StaffRole | "student";
-
+export type UserRole = StaffRole | "student" | "candidate";
 // Identifies whether the account belongs to a student or staff member
 export type AccountType = "student" | "staff";
 

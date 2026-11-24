@@ -3,8 +3,8 @@ import { StudentAccount } from "../auth/auth.model.js";
 import {
   getClassElectionResults,
   getParliamentResults,
+  getHeadWinnerReview,
 } from "./results.service.js";
-
 import {
   previewHeadWinners,
   submitHeadWinners,
@@ -218,6 +218,38 @@ export async function submitHeadWinnersToSSD(
     res.status(500).json({
       success: false,
       message: "Failed to submit department winners.",
+    });
+  }
+}/**
+ * GET /api/results/head-winners/review
+ * Director-only view of active winners submitted by Department Heads.
+ */
+export async function getDirectorHeadWinnerReview(
+  req: Request,
+  res: Response
+): Promise<void> {
+  try {
+    if (!req.user || req.user.role !== "director") {
+      res.status(403).json({
+        success: false,
+        message: "Only the Director can review submitted winners.",
+      });
+      return;
+    }
+
+    const data = await getHeadWinnerReview();
+
+    res.status(200).json({
+      success: true,
+      message: "Submitted winners retrieved successfully.",
+      data,
+    });
+  } catch (error) {
+    console.error("Director Head winners review error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to retrieve submitted winners.",
     });
   }
 }

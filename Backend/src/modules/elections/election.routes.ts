@@ -1,3 +1,4 @@
+
 import { Router } from "express";
 
 import { authenticate } from "../../middlewares/authenticate.js";
@@ -14,28 +15,28 @@ import {
 
 const router = Router();
 
-// All election schedule routes require authentication.
 router.use(authenticate);
 
-// Admin and director manage election schedules.
-router.use(authorize("admin", "director"));
+// Students, Admin and Director can view schedules.
+router.get("/", authorize("student", "admin", "director"), getAllSchedules);
 
-// Get all schedules.
-router.get("/", getAllSchedules);
+router.get(
+  "/:id",
+  authorize("student", "admin", "director"),
+  getScheduleById
+);
 
-// Get one schedule by ID.
-router.get("/:id", getScheduleById);
+// Only Admin and Director can manage schedules.
+router.post("/", authorize("admin", "director"), createSchedule);
 
-// Create a schedule.
-router.post("/", createSchedule);
+router.patch("/:id", authorize("admin", "director"), updateSchedule);
 
-// Update a schedule.
-router.patch("/:id", updateSchedule);
+router.patch(
+  "/:id/status",
+  authorize("admin", "director"),
+  updateScheduleStatus
+);
 
-// Activate or deactivate a schedule.
-router.patch("/:id/status", updateScheduleStatus);
-
-// Delete a schedule.
-router.delete("/:id", removeSchedule);
+router.delete("/:id", authorize("admin", "director"), removeSchedule);
 
 export default router;

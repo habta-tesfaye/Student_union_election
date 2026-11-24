@@ -5,6 +5,7 @@ import {
   getParliamentElectionResults,
   getHeadWinnersPreview,
   submitHeadWinnersToSSD,
+  getDirectorHeadWinnerReview,
 } from "./results.controller.js";
 const router = Router();
 
@@ -18,6 +19,8 @@ router.get("/class", getClassResults);
 router.get("/parliament", getParliamentElectionResults);
 // Head-only finalized class-winner workflow.
 router.get("/head-winners", getHeadWinnersPreview);
+// Director-only review of submitted winners.
+router.get("/head-winners/review", getDirectorHeadWinnerReview);
 router.post("/head-winners/submit", submitHeadWinnersToSSD);
 
 export default router;

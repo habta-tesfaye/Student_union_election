@@ -76,6 +76,58 @@ export async function getAllCandidates(
 }
 
 /**
+ * Get the logged-in candidate's own profile.
+ *
+ * The student ID comes from the authenticated token,
+ * not from a client-supplied URL parameter.
+ */
+export async function getMyCandidate(
+  req: Request,
+  res: Response
+): Promise<void> {
+  try {
+    if (req.user?.role !== "candidate" || !req.user.studentId) {
+      res.status(403).json({
+        success: false,
+        message: "Candidate account information is required.",
+      });
+      return;
+    }
+
+    const candidate = await findCandidateByStudentId(req.user.studentId);
+
+    if (!candidate) {
+      res.status(404).json({
+        success: false,
+        message: "Your candidate profile was not found.",
+      });
+      return;
+    }
+
+    if (!candidate.student) {
+      res.status(404).json({
+        success: false,
+        message: "Candidate student information was not found.",
+      });
+      return;
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Your candidate profile was retrieved successfully.",
+      data: { candidate },
+    });
+  } catch (error) {
+    console.error("Get my candidate profile error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to retrieve your candidate profile.",
+    });
+  }
+}
+
+/**
  * Get one official candidate using the student's ID.
  */
 export async function getCandidateByStudentId(

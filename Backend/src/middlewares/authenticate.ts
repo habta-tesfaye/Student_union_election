@@ -90,7 +90,11 @@ export async function authenticate(
     let authenticatedUser: AuthenticatedUser;
 
     if (payload.accountType === "student") {
-      if (payload.role !== "student") {
+      // Student accounts may sign in as a student or candidate.
+      if (
+        payload.role !== "student" &&
+        payload.role !== "candidate"
+      ) {
         res.status(401).json({
           success: false,
           message: "Invalid student access token.",
@@ -111,7 +115,7 @@ export async function authenticate(
       authenticatedUser = {
         id: student._id.toString(),
         accountType: "student",
-        role: "student",
+        role: payload.role,
         studentId: student.studentId,
         firstName: student.firstName,
         middleName: student.middleName,
@@ -129,7 +133,8 @@ export async function authenticate(
 
       if (
         !allowedStaffRoles.includes(payload.role) ||
-        payload.role === "student"
+        payload.role === "student" ||
+        payload.role === "candidate"
       ) {
         res.status(401).json({
           success: false,
@@ -160,7 +165,7 @@ export async function authenticate(
       };
     }
 
-    // 7. Attach the real account information to the request.
+    // 7. Attach the authenticated account information to the request.
     req.user = authenticatedUser;
 
     // 8. Continue to the protected route.
