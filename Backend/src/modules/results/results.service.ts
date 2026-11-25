@@ -1,9 +1,10 @@
-
 import { Candidate } from "../candidates/candidate.model.js";
 import { Vote } from "../voting/vote.model.js";
 import { StudentAccount } from "../auth/auth.model.js";
 import { Phase3Parliament } from "../parliament/phase3-parliament.model.js";
 import { HeadWinner } from "../parliament/head-winner.model.js";
+import { createNotification } from "../notifications/notification.service.js";
+
 interface ClassCandidateResult {
   studentId: string;
   photo: string;
@@ -51,7 +52,6 @@ function compareClassCandidates(
 
 /**
  * Get class-election results.
- *
  * Department and year section are supplied by the controller.
  */
 export async function getClassElectionResults(
@@ -72,9 +72,7 @@ export async function getClassElectionResults(
     )
     .lean();
 
-  const studentIds = students.map(
-    (student) => student.studentId
-  );
+  const studentIds = students.map((student) => student.studentId);
 
   const candidates = await Candidate.find({
     studentId: { $in: studentIds },
@@ -84,9 +82,7 @@ export async function getClassElectionResults(
     {
       $match: {
         department,
-        ...(yearSection
-          ? { year_section: yearSection }
-          : {}),
+        ...(yearSection ? { year_section: yearSection } : {}),
       },
     },
     {
@@ -98,58 +94,44 @@ export async function getClassElectionResults(
   ]);
 
   const voteCounts = new Map<string, number>(
-    votes.map((vote) => [
-      vote._id,
-      vote.totalVotes,
-    ])
+    votes.map((vote) => [vote._id, vote.totalVotes])
   );
 
   const studentMap = new Map(
-    students.map((student) => [
-      student.studentId,
-      student,
-    ])
+    students.map((student) => [student.studentId, student])
   );
 
-  const results: ClassCandidateResult[] = candidates.map(
-    (candidate) => {
-      const student = studentMap.get(candidate.studentId);
+  const results: ClassCandidateResult[] = candidates.map((candidate) => {
+    const student = studentMap.get(candidate.studentId);
 
-      return {
-        studentId: candidate.studentId,
-        photo: candidate.photo,
-        totalVotes:
-          voteCounts.get(candidate.studentId) ?? 0,
-        manualWinner: candidate.manualWinner ?? false,
-        firstName: student?.firstName ?? "",
-        middleName: student?.middleName ?? "",
-        lastName: student?.lastName ?? "",
-        gender: student?.gender ?? "",
-        region: student?.region ?? "",
-        disability: student?.disability ?? "",
-        department: student?.department ?? "",
-        yearSection: student?.yearSection ?? "",
-        gpa: student?.gpa ?? 0,
-      };
-    }
-  );
+    return {
+      studentId: candidate.studentId,
+      photo: candidate.photo,
+      totalVotes: voteCounts.get(candidate.studentId) ?? 0,
+      manualWinner: candidate.manualWinner ?? false,
+      firstName: student?.firstName ?? "",
+      middleName: student?.middleName ?? "",
+      lastName: student?.lastName ?? "",
+      gender: student?.gender ?? "",
+      region: student?.region ?? "",
+      disability: student?.disability ?? "",
+      department: student?.department ?? "",
+      yearSection: student?.yearSection ?? "",
+      gpa: student?.gpa ?? 0,
+    };
+  });
 
   results.sort(compareClassCandidates);
 
   const maleCandidates = results.filter(
-    (candidate) =>
-      candidate.gender.toLowerCase() === "male"
+    (candidate) => candidate.gender.toLowerCase() === "male"
   );
 
   // Original PHP places all non-male candidates in this group.
   const femaleCandidates = results.filter(
-    (candidate) =>
-      candidate.gender.toLowerCase() !== "male"
+    (candidate) => candidate.gender.toLowerCase() !== "male"
   );
 
-  /**
-   * Determine the winner for one group.
-   */
   function getWinner(
     group: ClassCandidateResult[]
   ): ClassCandidateResult | null {
@@ -174,21 +156,16 @@ export async function getClassElectionResults(
   const maleWinner = getWinner(maleCandidates);
   const femaleWinner = getWinner(femaleCandidates);
 
-  const maleDeadlock =
-    maleCandidates.length > 1 &&
-    maleWinner === null;
-
+  const maleDeadlock = maleCandidates.length > 1 && maleWinner === null;
   const femaleDeadlock =
-    femaleCandidates.length > 1 &&
-    femaleWinner === null;
+    femaleCandidates.length > 1 && femaleWinner === null;
 
   return {
     department,
     yearSection: yearSection ?? null,
     totalCandidates: results.length,
     totalVotes: results.reduce(
-      (sum, candidate) =>
-        sum + candidate.totalVotes,
+      (sum, candidate) => sum + candidate.totalVotes,
       0
     ),
     maleWinner,
@@ -202,7 +179,6 @@ export async function getClassElectionResults(
 
 /**
  * Get finalized parliament results.
- *
  * Results are published only after an official leadership
  * designation has been assigned.
  */
@@ -214,12 +190,11 @@ export async function getParliamentResults() {
     "Executive Member",
   ];
 
-  const finalizedCount =
-    await Phase3Parliament.countDocuments({
-      final_selection_status: {
-        $in: finalizedStatuses,
-      },
-    });
+  const finalizedCount = await Phase3Parliament.countDocuments({
+    final_selection_status: {
+      $in: finalizedStatuses,
+    },
+  });
 
   const isFinalized = finalizedCount > 0;
 
@@ -230,9 +205,7 @@ export async function getParliamentResults() {
     })
     .lean();
 
-  const studentIds = records.map(
-    (record) => record.student_id
-  );
+  const studentIds = records.map((record) => record.student_id);
 
   const candidates = await Candidate.find({
     studentId: { $in: studentIds },
@@ -247,17 +220,11 @@ export async function getParliamentResults() {
     .lean();
 
   const candidateMap = new Map(
-    candidates.map((candidate) => [
-      candidate.studentId,
-      candidate,
-    ])
+    candidates.map((candidate) => [candidate.studentId, candidate])
   );
 
   const studentMap = new Map(
-    students.map((student) => [
-      student.studentId,
-      student,
-    ])
+    students.map((student) => [student.studentId, student])
   );
 
   const results = records.map((record) => {
@@ -279,8 +246,7 @@ export async function getParliamentResults() {
       pre_parliament_40: record.pre_parliament_40,
       parliament_score_60: record.parliament_score_60,
       total_score_100: record.total_score_100,
-      final_selection_status:
-        record.final_selection_status,
+      final_selection_status: record.final_selection_status,
       created_at: record.created_at,
     };
   });
@@ -299,19 +265,17 @@ export async function getParliamentResults() {
       return b.total_score_100 - a.total_score_100;
     }
 
-    const disabilityComparison =
-      String(b.disability ?? "").localeCompare(
-        String(a.disability ?? "")
-      );
+    const disabilityComparison = String(b.disability ?? "").localeCompare(
+      String(a.disability ?? "")
+    );
 
     if (disabilityComparison !== 0) {
       return disabilityComparison;
     }
 
-    const genderComparison =
-      String(b.gender ?? "").localeCompare(
-        String(a.gender ?? "")
-      );
+    const genderComparison = String(b.gender ?? "").localeCompare(
+      String(a.gender ?? "")
+    );
 
     if (genderComparison !== 0) {
       return genderComparison;
@@ -342,13 +306,11 @@ export async function getParliamentResults() {
   );
 
   const executiveMembers = results.filter(
-    (item) =>
-      item.final_selection_status === "Executive Member"
+    (item) => item.final_selection_status === "Executive Member"
   );
 
   const generalMembers = results.filter(
-    (item) =>
-      item.final_selection_status === "pending"
+    (item) => item.final_selection_status === "pending"
   );
 
   const leadershipOrder: Record<string, number> = {
@@ -370,15 +332,12 @@ export async function getParliamentResults() {
       : "Parliament election results are under review.",
     totalCandidates: results.length,
     topThree: isFinalized ? topThree : [],
-    executiveMembers: isFinalized
-      ? executiveMembers
-      : [],
-    generalMembers: isFinalized
-      ? generalMembers
-      : [],
+    executiveMembers: isFinalized ? executiveMembers : [],
+    generalMembers: isFinalized ? generalMembers : [],
     results: isFinalized ? results : [],
   };
 }
+
 /**
  * Get active winners submitted by Department Heads.
  * Winner records contain student IDs, so join them with student accounts.
@@ -416,4 +375,170 @@ export async function getHeadWinnerReview() {
       yearSection: student?.yearSection ?? "",
     };
   });
+}
+
+const PARLIAMENT_LEADERSHIP_ROLES = [
+  "President",
+  "Vice President",
+  "Executive",
+] as const;
+
+/**
+ * Director finalizes the official Parliament rankings.
+ *
+ * Ranks 1–3 receive leadership roles.
+ * Ranks 4–8 become Executive Members.
+ * Remaining candidates stay pending / General Members.
+ * Scores are not changed.
+ */
+export async function finalizeParliamentRoles() {
+  const records = await Phase3Parliament.find()
+    .select("student_id total_score_100 created_at")
+    .lean();
+
+  if (records.length === 0) {
+    throw new Error("There are no Parliament candidates to finalize.");
+  }
+
+  const studentIds = records.map((record) => record.student_id);
+
+  const students = await StudentAccount.find({
+    studentId: { $in: studentIds },
+  })
+    .select("studentId firstName disability gender gpa region")
+    .lean();
+
+  const studentMap = new Map(
+    students.map((student) => [student.studentId, student])
+  );
+
+  // Only rank Parliament records with a matching student account.
+  const ranked = records
+    .filter((record) => studentMap.has(record.student_id))
+    .sort((a, b) => {
+      if (a.total_score_100 !== b.total_score_100) {
+        return b.total_score_100 - a.total_score_100;
+      }
+
+      const aStudent = studentMap.get(a.student_id)!;
+      const bStudent = studentMap.get(b.student_id)!;
+
+      const disabilityComparison = String(
+        bStudent.disability ?? ""
+      ).localeCompare(String(aStudent.disability ?? ""));
+
+      if (disabilityComparison !== 0) {
+        return disabilityComparison;
+      }
+
+      const genderComparison = String(
+        bStudent.gender ?? ""
+      ).localeCompare(String(aStudent.gender ?? ""));
+
+      if (genderComparison !== 0) {
+        return genderComparison;
+      }
+
+      const gpaComparison =
+        (bStudent.gpa ?? 0) - (aStudent.gpa ?? 0);
+
+      if (gpaComparison !== 0) {
+        return gpaComparison;
+      }
+
+      const aRegion6 = aStudent.region === "6" ? 1 : 0;
+      const bRegion6 = bStudent.region === "6" ? 1 : 0;
+
+      if (aRegion6 !== bRegion6) {
+        return bRegion6 - aRegion6;
+      }
+
+      return (
+        new Date(a.created_at).getTime() -
+        new Date(b.created_at).getTime()
+      );
+    });
+
+  if (ranked.length === 0) {
+    throw new Error(
+      "No Parliament candidates have matching student records."
+    );
+  }
+
+  // Clear previous roles before assigning the new ranking.
+  await Phase3Parliament.updateMany(
+    {},
+    { $set: { final_selection_status: "pending" } }
+  );
+
+  const assignments = ranked.map((record, index) => {
+    const rank = index + 1;
+
+    const role =
+      rank <= 3
+        ? PARLIAMENT_LEADERSHIP_ROLES[rank - 1]
+        : rank <= 8
+          ? "Executive Member"
+          : "pending";
+
+    return {
+      studentId: record.student_id,
+      firstName: studentMap.get(record.student_id)?.firstName ?? "",
+      role,
+      rank,
+    };
+  });
+
+  // Save the assigned roles. Scores are not modified.
+  for (const assignment of assignments) {
+    await Phase3Parliament.updateOne(
+      { student_id: assignment.studentId },
+      { $set: { final_selection_status: assignment.role } }
+    );
+  }
+
+  // Notify every ranked candidate.
+  await Promise.all(
+    assignments.map((assignment) =>
+      createNotification({
+        recipientId: assignment.studentId,
+        recipientType: "student",
+        title: "Parliament selection result",
+        message:
+          assignment.rank <= 3
+            ? `Congratulations ${assignment.firstName}! You are the ${assignment.role} of the DMU Parliament.`
+            : assignment.rank <= 8
+              ? `Well done ${assignment.firstName}! You have been appointed as an Executive Member.`
+              : "Parliament selection is complete. You are a confirmed General Member.",
+        type: "result",
+      })
+    )
+  );
+
+  return {
+    assignedCount: assignments.length,
+    leadershipCount: Math.min(assignments.length, 3),
+    executiveMemberCount: Math.max(
+      0,
+      Math.min(assignments.length - 3, 5)
+    ),
+    generalMemberCount: Math.max(assignments.length - 8, 0),
+    message: "Parliament selection has been finalized successfully.",
+  };
+}
+
+/**
+ * Director resets Parliament role assignments.
+ * Scores and candidate records are not changed.
+ */
+export async function resetParliamentRoles() {
+  const result = await Phase3Parliament.updateMany(
+    {},
+    { $set: { final_selection_status: "pending" } }
+  );
+
+  return {
+    resetCount: result.modifiedCount,
+    message: "All Parliament role assignments have been cleared.",
+  };
 }

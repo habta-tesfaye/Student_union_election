@@ -1,4 +1,8 @@
 import { Router } from "express";
+import {
+  finalizeParliamentElection,
+  resetParliamentElection,
+} from "./results.controller.js";
 import { authenticate } from "../../middlewares/authenticate.js";
 import {
   getClassResults,
@@ -11,7 +15,8 @@ const router = Router();
 
 // All results endpoints require authentication.
 router.use(authenticate);
-
+router.post("/parliament/finalize", finalizeParliamentElection);
+router.post("/parliament/reset", resetParliamentElection);
 // Class election results for the user's department/section.
 router.get("/class", getClassResults);
 

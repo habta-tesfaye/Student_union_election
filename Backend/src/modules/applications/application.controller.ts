@@ -4,27 +4,27 @@ import { applicationService } from "./application.service.js";
 import { createApplicationSchema } from "./application.validation.js";
 
 /**
- * Submit a new student election application.
+ * Submit a new Phase 1 application.
+ * Only authenticated candidates are allowed.
  */
 async function createApplication(
   req: Request,
   res: Response
 ): Promise<void> {
   try {
-    // Make sure the user is logged in as a student.
     if (
       !req.user ||
       req.user.accountType !== "student" ||
+      req.user.role !== "candidate" ||
       !req.user.studentId
     ) {
       res.status(403).json({
         success: false,
-        message: "Only authenticated students can submit applications.",
+        message: "Only authenticated candidates can submit applications.",
       });
       return;
     }
 
-    // Validate the information submitted by the student.
     const validationResult = createApplicationSchema.safeParse(req.body);
 
     if (!validationResult.success) {
@@ -36,7 +36,6 @@ async function createApplication(
       return;
     }
 
-    // Save the application using the authenticated student's ID.
     const application = await applicationService.createApplication(
       req.user.studentId,
       validationResult.data
@@ -44,37 +43,57 @@ async function createApplication(
 
     res.status(201).json({
       success: true,
-      message: "Your election application was submitted successfully.",
+      message: "Your leadership vision has been successfully submitted.",
       data: {
         application,
       },
     });
   } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "";
+    const message = error instanceof Error ? error.message : "";
 
-    // Disciplined students cannot submit applications.
+    // Parliament membership restriction.
+    if (
+      message ===
+      "You are not authorized to submit an application because you are not a Parliament member."
+    ) {
+      res.status(403).json({ success: false, message });
+      return;
+    }
+
+    // Discipline restriction.
     if (
       message ===
       "You are not eligible to apply because your discipline status is Disciplined."
     ) {
-      res.status(403).json({
-        success: false,
-        message,
-      });
+      res.status(403).json({ success: false, message });
       return;
     }
 
-    // Handle duplicate applications.
+    // Duplicate application.
     if (message === "You have already submitted an application.") {
-      res.status(409).json({
-        success: false,
-        message,
-      });
+      res.status(409).json({ success: false, message });
       return;
     }
 
-    // Handle unexpected errors.
+    // Schedule is not configured.
+    if (
+      message ===
+      "The application submission schedule has not been set."
+    ) {
+      res.status(503).json({ success: false, message });
+      return;
+    }
+
+    // Schedule is inactive or outside its submission period.
+    if (
+      message === "Application submission is currently disabled." ||
+      message === "Application submission has not started yet." ||
+      message === "The application submission period has closed."
+    ) {
+      res.status(403).json({ success: false, message });
+      return;
+    }
+
     console.error("Create application error:", error);
 
     res.status(500).json({
@@ -86,7 +105,7 @@ async function createApplication(
 }
 
 /**
- * Get the authenticated student's own application.
+ * Get the authenticated student's or candidate's own application.
  */
 async function getMyApplication(
   req: Request,
@@ -96,11 +115,13 @@ async function getMyApplication(
     if (
       !req.user ||
       req.user.accountType !== "student" ||
+      !["student", "candidate"].includes(req.user.role) ||
       !req.user.studentId
     ) {
       res.status(403).json({
         success: false,
-        message: "Only authenticated students can view student applications.",
+        message:
+          "Only authenticated students and candidates can view their own applications.",
       });
       return;
     }
@@ -135,9 +156,6 @@ async function getMyApplication(
   }
 }
 
-/**
- * Export application controller functions.
- */
 export const applicationController = {
   createApplication,
   getMyApplication,

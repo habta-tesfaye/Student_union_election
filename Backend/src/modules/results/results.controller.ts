@@ -6,6 +6,11 @@ import {
   getHeadWinnerReview,
 } from "./results.service.js";
 import {
+  finalizeParliamentRoles,
+  resetParliamentRoles,
+} from "./results.service.js";
+
+import {
   previewHeadWinners,
   submitHeadWinners,
 } from "./head-winner-submission.service.js";
@@ -250,6 +255,76 @@ export async function getDirectorHeadWinnerReview(
     res.status(500).json({
       success: false,
       message: "Failed to retrieve submitted winners.",
+    });
+  }
+}
+/**
+ * POST /api/results/parliament/finalize
+ * Director-only finalization of Parliament roles.
+ */
+export async function finalizeParliamentElection(
+  req: Request,
+  res: Response
+): Promise<void> {
+  if (!req.user || req.user.role !== "director") {
+    res.status(403).json({
+      success: false,
+      message: "Only the Director can finalize Parliament results.",
+    });
+    return;
+  }
+
+  try {
+    const data = await finalizeParliamentRoles();
+
+    res.status(200).json({
+      success: true,
+      message: data.message,
+      data,
+    });
+  } catch (error) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Failed to finalize Parliament results.";
+
+    res.status(400).json({
+      success: false,
+      message,
+    });
+  }
+}
+
+/**
+ * POST /api/results/parliament/reset
+ * Director-only reset of assigned Parliament roles.
+ */
+export async function resetParliamentElection(
+  req: Request,
+  res: Response
+): Promise<void> {
+  if (!req.user || req.user.role !== "director") {
+    res.status(403).json({
+      success: false,
+      message: "Only the Director can reset Parliament results.",
+    });
+    return;
+  }
+
+  try {
+    const data = await resetParliamentRoles();
+
+    res.status(200).json({
+      success: true,
+      message: data.message,
+      data,
+    });
+  } catch (error) {
+    console.error("Reset Parliament roles error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to reset Parliament roles.",
     });
   }
 }

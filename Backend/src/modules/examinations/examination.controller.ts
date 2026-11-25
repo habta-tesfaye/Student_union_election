@@ -10,6 +10,8 @@ import {
   getPhase2Evaluation,
   createPhase2EvaluationRecord,
   updatePhase2EvaluationRecord,
+  getTop16Candidates,
+  finalizeTop16Selection,
 } from "./examination.service.js";
 
 /**
@@ -27,9 +29,6 @@ function getStudentIdParam(req: Request): string {
    PHASE 1 EXAMINATION
 ===================================================== */
 
-/**
- * Get all Phase 1 examination records.
- */
 export async function getPhase1Exams(
   _req: Request,
   res: Response
@@ -52,9 +51,6 @@ export async function getPhase1Exams(
   }
 }
 
-/**
- * Get one Phase 1 examination by student ID.
- */
 export async function getPhase1ExamByStudentId(
   req: Request,
   res: Response
@@ -84,9 +80,6 @@ export async function getPhase1ExamByStudentId(
   }
 }
 
-/**
- * Create a Phase 1 examination record.
- */
 export async function createPhase1Exam(
   req: Request,
   res: Response
@@ -141,9 +134,6 @@ export async function createPhase1Exam(
   }
 }
 
-/**
- * Update a Phase 1 examination record.
- */
 export async function updatePhase1Exam(
   req: Request,
   res: Response
@@ -186,12 +176,68 @@ export async function updatePhase1Exam(
 }
 
 /* =====================================================
+   TOP 16 WINNERS MANAGEMENT
+   Original PHP: winners_top16.php
+===================================================== */
+
+export async function getTop16Winners(
+  _req: Request,
+  res: Response
+): Promise<void> {
+  try {
+    const candidates = await getTop16Candidates();
+
+    res.status(200).json({
+      success: true,
+      count: candidates.length,
+      data: candidates,
+    });
+  } catch (error) {
+    console.error("Get Top 16 candidates error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to retrieve Top 16 candidates.",
+    });
+  }
+}
+
+export async function finalizeTop16Winners(
+  _req: Request,
+  res: Response
+): Promise<void> {
+  try {
+    const result = await finalizeTop16Selection();
+
+    res.status(200).json({
+      success: true,
+      message:
+        "Top 16 selected successfully and moved to Phase 2 Evaluation.",
+      data: result,
+    });
+  } catch (error) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Unknown error";
+
+    console.error("Finalize Top 16 selection error:", error);
+
+    const statusCode = message.startsWith("No SSD-approved")
+      ? 400
+      : 500;
+
+    res.status(statusCode).json({
+      success: false,
+      message,
+    });
+  }
+}
+
+/* =====================================================
    PHASE 2 EVALUATION
 ===================================================== */
 
-/**
- * Get all Phase 2 evaluation records.
- */
 export async function getPhase2Evaluations(
   _req: Request,
   res: Response
@@ -214,9 +260,6 @@ export async function getPhase2Evaluations(
   }
 }
 
-/**
- * Get one Phase 2 evaluation by student ID.
- */
 export async function getPhase2EvaluationByStudentId(
   req: Request,
   res: Response
@@ -248,15 +291,6 @@ export async function getPhase2EvaluationByStudentId(
   }
 }
 
-/**
- * Create a Phase 2 evaluation record.
- *
- * Original PHP scoring:
- * Certificate: 0-5
- * Proposal:    0-15
- * Interview:   0-10
- * Total:       0-30
- */
 export async function createPhase2Evaluation(
   req: Request,
   res: Response
@@ -307,7 +341,7 @@ export async function createPhase2Evaluation(
     const message =
       error instanceof Error ? error.message : "Unknown error";
 
-    const statusCode = message.includes("already has") ? 409 : 400;
+    const statusCode = message.includes("already exists") ? 409 : 400;
 
     res.status(statusCode).json({
       success: false,
@@ -316,9 +350,6 @@ export async function createPhase2Evaluation(
   }
 }
 
-/**
- * Update a Phase 2 evaluation record.
- */
 export async function updatePhase2Evaluation(
   req: Request,
   res: Response
@@ -340,7 +371,6 @@ export async function updatePhase2Evaluation(
         interviewScore,
         selectionStatus,
         remarks,
-        evaluatedBy: req.user?.staffId,
       }
     );
 
@@ -358,6 +388,49 @@ export async function updatePhase2Evaluation(
     res.status(statusCode).json({
       success: false,
       message,
+    });
+  }
+}
+
+export async function getMyPhase2Evaluation(
+  req: Request,
+  res: Response
+): Promise<void> {
+  try {
+    if (
+      req.user?.accountType !== "student" ||
+      req.user.role !== "candidate" ||
+      !req.user.studentId
+    ) {
+      res.status(403).json({
+        success: false,
+        message: "Only candidates can access their own evaluation.",
+      });
+      return;
+    }
+
+    const evaluation = await getPhase2Evaluation(
+      req.user.studentId
+    );
+
+    if (!evaluation) {
+      res.status(404).json({
+        success: false,
+        message: "Your Phase 2 evaluation record has not been created yet.",
+      });
+      return;
+    }
+
+    res.status(200).json({
+      success: true,
+      data: evaluation,
+    });
+  } catch (error) {
+    console.error("Get my Phase 2 evaluation error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to retrieve your Phase 2 evaluation.",
     });
   }
 }

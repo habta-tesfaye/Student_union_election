@@ -11,6 +11,10 @@ import {
   MessageCircle,
   CircleHelp,
   Settings,
+  FileText,
+  ClipboardCheck,
+  ClipboardList,
+  Vote,
   LogOut,
 } from "lucide-react";
 
@@ -19,13 +23,17 @@ import "./CandidateMenu.css";
 export type CandidateSection =
   | "dashboard"
   | "profile"
-  | "candidacy"
+  | "application"
+  | "stage1-status"
+  | "stage2-status"
+  | "parliament-voting"
   | "campaign"
   | "schedule"
   | "statistics"
   | "notices"
   | "notifications"
   | "feedback"
+  | "candidacy"
   | "help"
   | "account";
 
@@ -49,10 +57,34 @@ const menuItems = [
     icon: User,
   },
   {
+    id: "stage2-status",
+    label: "Phase 2 Status",
+    description: "View your evaluation scores",
+    icon: ClipboardList,
+  },
+  {
+    id: "application",
+    label: "Phase 1 Application",
+    description: "Submit your leadership vision",
+    icon: FileText,
+  },
+  {
     id: "candidacy",
     label: "My Candidacy",
     description: "View official candidacy information",
     icon: Award,
+  },
+  {
+    id: "stage1-status",
+    label: "Phase 1 Status",
+    description: "View your examination and selection status",
+    icon: ClipboardCheck,
+  },
+  {
+    id: "parliament-voting",
+    label: "Parliament Scoring",
+    description: "Evaluate the eight Parliament candidates",
+    icon: Vote,
   },
   {
     id: "campaign",

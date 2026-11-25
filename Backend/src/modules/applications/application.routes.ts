@@ -1,31 +1,23 @@
 import { Router } from "express";
-
 import { authenticate } from "../../middlewares/authenticate.js";
 import { authorize } from "../../middlewares/authorize.js";
-
 import { applicationController } from "./application.controller.js";
 
 const router = Router();
 
-/**
- * Submit a new student election application.
- * Only authenticated students can submit applications.
- */
+// Submit Phase 1 application: candidates only.
 router.post(
   "/",
   authenticate,
-  authorize("student"),
+  authorize("candidate"),
   applicationController.createApplication
 );
 
-/**
- * Get the authenticated student's own application.
- * Only authenticated students can access this endpoint.
- */
+// View own application: students and candidates.
 router.get(
   "/me",
   authenticate,
-  authorize("student"),
+  authorize("student", "candidate"),
   applicationController.getMyApplication
 );
 

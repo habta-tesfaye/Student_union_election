@@ -10,7 +10,8 @@ export type NotificationType =
   | "result"
   | "notice"
   | "general"
-  | "winner_submission";
+  | "winner_submission"
+  | "application_send";
 
 export interface NotificationDocument {
   recipientId: string;
@@ -64,6 +65,7 @@ const notificationSchema = new Schema<NotificationDocument>(
         "notice",
         "general",
         "winner_submission",
+        "application_send",
       ],
       default: "general",
       required: true,

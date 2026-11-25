@@ -1,0 +1,201 @@
+
+.candidate-application {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 14px;
+  border: 1px solid #e8edf5;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.04);
+  margin-top: 20px;
+}
+
+.candidate-application-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e8edf5;
+}
+
+.candidate-application-eyebrow {
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.candidate-application-heading h2 {
+  color: #102b52;
+  font-size: 24px;
+  margin: 12px 0;
+}
+
+.candidate-application-heading p {
+  color: #64748b;
+  line-height: 1.7;
+  max-width: 650px;
+}
+
+.candidate-application-icon {
+  width: 65px;
+  height: 65px;
+  min-width: 65px;
+  display: grid;
+  place-items: center;
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-radius: 14px;
+  font-size: 30px;
+}
+
+.candidate-application-form {
+  margin-top: 28px;
+}
+
+.candidate-application-form label {
+  display: block;
+  color: #102b52;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.candidate-application-help {
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.candidate-application-form textarea {
+  display: block;
+  width: 100%;
+  min-height: 220px;
+  padding: 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  outline: none;
+  resize: vertical;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #17243b;
+  background: #ffffff;
+}
+
+.candidate-application-form textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.candidate-application-counter {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 9px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.candidate-application-notice {
+  background: #eff6ff;
+  color: #1e40af;
+  border-left: 4px solid #2563eb;
+  padding: 15px;
+  margin: 24px 0;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.candidate-application-form button {
+  background: #1d4ed8;
+  color: #ffffff;
+  border: none;
+  padding: 14px 25px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.candidate-application-form button:hover:not(:disabled) {
+  background: #1e40af;
+}
+
+.candidate-application-form button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.candidate-application-error,
+.candidate-application-success {
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 7px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.candidate-application-error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.candidate-application-success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.candidate-application-result {
+  margin-top: 25px;
+}
+
+.candidate-application-result h3 {
+  color: #166534;
+}
+
+.candidate-application-details {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 18px;
+  border-radius: 9px;
+  margin: 20px 0;
+}
+
+.candidate-application-details p {
+  color: #475569;
+  margin: 10px 0;
+}
+
+.candidate-application-result h4 {
+  color: #102b52;
+}
+
+.candidate-application-motivation {
+  white-space: pre-wrap;
+  line-height: 1.8;
+  color: #475569;
+  background: #f8fafc;
+  padding: 18px;
+  border-radius: 8px;
+}
+
+@media (max-width: 650px) {
+  .candidate-application {
+    padding: 20px;
+  }
+
+  .candidate-application-heading h2 {
+    font-size: 20px;
+  }
+
+  .candidate-application-icon {
+    display: none;
+  }
+
+  .candidate-application-counter {
+    flex-direction: column;
+  }
+}

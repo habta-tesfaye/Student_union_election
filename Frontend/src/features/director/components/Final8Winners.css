@@ -1,0 +1,152 @@
+.final8-page {
+  width: 100%;
+  color: #243247;
+}
+
+.final8-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.final8-header h2 {
+  margin: 0 0 8px;
+  color: #102a56;
+  font-size: 25px;
+}
+
+.final8-header p {
+  margin: 0;
+  color: #64748b;
+}
+
+.final8-header button,
+.final8-error button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 7px;
+  background: #174a91;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.final8-header button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.final8-score-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+  margin-bottom: 24px;
+}
+
+.final8-score-cards article {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+  background: white;
+}
+
+.final8-score-cards span {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.final8-score-cards strong {
+  color: #102a56;
+  font-size: 24px;
+}
+
+.final8-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+  background: white;
+}
+
+.final8-table {
+  width: 100%;
+  min-width: 750px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.final8-table th {
+  padding: 15px;
+  background: #edf3fb;
+  color: #102a56;
+  font-size: 13px;
+}
+
+.final8-table td {
+  padding: 14px 15px;
+  border-top: 1px solid #e8edf4;
+  font-size: 13px;
+}
+
+.final8-table tbody tr:hover {
+  background: #f8fbff;
+}
+
+.final8-message,
+.final8-error,
+.final8-notice {
+  margin-top: 20px;
+  padding: 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+  background: white;
+}
+
+.final8-message {
+  color: #64748b;
+  text-align: center;
+}
+
+.final8-error {
+  color: #991b1b;
+  background: #fff7f7;
+  border-color: #fecaca;
+}
+
+.final8-notice {
+  border-left: 4px solid #174a91;
+  background: #f5f8fd;
+}
+
+.final8-notice strong {
+  color: #102a56;
+}
+
+.final8-notice p {
+  margin-bottom: 0;
+  color: #526176;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+@media (max-width: 800px) {
+  .final8-score-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .final8-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .final8-score-cards {
+    grid-template-columns: 1fr;
+  }
+}

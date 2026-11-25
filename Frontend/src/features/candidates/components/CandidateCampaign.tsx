@@ -33,7 +33,7 @@ function CandidateCampaign() {
     }
 
     if (campaignMotto.length < 2 || campaignMotto.length > 300) {
-      setError("Motto must contain 2–300 characters.");
+      setError("Campaign motto must contain 2–300 characters.");
       return;
     }
 
@@ -52,8 +52,11 @@ function CandidateCampaign() {
       });
 
       setCampaign(result);
+
       setSuccess(
-        "Your campaign was submitted successfully and is awaiting Director approval."
+        result.status === "pending"
+          ? "Your campaign was submitted successfully and is awaiting Director review."
+          : "Your campaign submission was successful."
       );
     } catch (err) {
       setError(
@@ -72,12 +75,13 @@ function CandidateCampaign() {
         <div className="campaign-result">
           <div className="campaign-result-icon">✓</div>
 
-          <h2>Campaign Submitted</h2>
+          <h2>My Campaign</h2>
 
           <p className="campaign-success">{success}</p>
 
           <div className="campaign-status">
             <span>Campaign Status</span>
+
             <strong className={`status-${campaign.status}`}>
               {campaign.status.toUpperCase()}
             </strong>
@@ -100,7 +104,8 @@ function CandidateCampaign() {
             </p>
 
             <div>
-              <strong>Manifesto</strong>
+              <strong>Detailed Manifesto</strong>
+
               <p className="manifesto-text">
                 {campaign.manifestoDetailed}
               </p>
@@ -123,6 +128,7 @@ function CandidateCampaign() {
     <div className="candidate-campaign">
       <div className="campaign-intro">
         <h2>My Campaign</h2>
+
         <p>
           Submit your campaign proposal for review by the Student Union
           Director.
@@ -142,15 +148,13 @@ function CandidateCampaign() {
         )}
 
         {success && (
-          <div className="campaign-success">
+          <div className="campaign-success" role="status">
             {success}
           </div>
         )}
 
         <div className="campaign-field">
-          <label htmlFor="campaignTitle">
-            Campaign Title
-          </label>
+          <label htmlFor="campaignTitle">Campaign Title</label>
 
           <input
             id="campaignTitle"
@@ -164,13 +168,13 @@ function CandidateCampaign() {
             disabled={loading}
           />
 
-          <small>{campaignTitle.length}/200 characters (minimum 3)</small>
+          <small>
+            {campaignTitle.length}/200 characters (minimum 3)
+          </small>
         </div>
 
         <div className="campaign-field">
-          <label htmlFor="campaignMotto">
-            Campaign Motto
-          </label>
+          <label htmlFor="campaignMotto">Campaign Motto</label>
 
           <input
             id="campaignMotto"
@@ -184,7 +188,9 @@ function CandidateCampaign() {
             disabled={loading}
           />
 
-          <small>{motto.length}/300 characters (minimum 2)</small>
+          <small>
+            {motto.length}/300 characters (minimum 2)
+          </small>
         </div>
 
         <div className="campaign-field">
@@ -212,7 +218,8 @@ function CandidateCampaign() {
         </div>
 
         <div className="campaign-guideline">
-          <strong>Submission guidelines</strong>
+          <strong>Submission Guidelines</strong>
+
           <ul>
             <li>Only one campaign submission is allowed per student.</li>
             <li>Your submission starts with Pending status.</li>

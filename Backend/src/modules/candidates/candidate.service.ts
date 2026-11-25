@@ -74,7 +74,7 @@ export async function getCandidateByStudentId(studentId: string) {
 
   const student = await StudentAccount.findOne({ studentId })
     .select(
-      "studentId firstName middleName lastName department yearSection gpa"
+      "studentId firstName middleName lastName gender region disability department yearSection gpa"
     )
     .lean();
 
