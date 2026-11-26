@@ -18,25 +18,21 @@ import ContactPage from "./features/contact/pages/ContactPage";
 import ForgotPasswordPage from "./features/auth/pages/ForgotPasswordPage";
 import LoginPage from "./features/auth/pages/LoginPage";
 
-// Supports both local development and the GitHub Pages subpath.
-const withBase = (path: string) =>
-  `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
-
 const slides = [
   {
-    image: withBase("/images/campus.jpg"),
+    image: "/images/campus.jpg",
     alt: "Debre Markos University Bure Campus",
     title: "Welcome to DMU Bure Campus",
     subtitle: "A connected campus. A stronger student voice.",
   },
   {
-    image: withBase("/images/students.jpg"),
+    image: "/images/students.jpg",
     alt: "University students",
     title: "Your Campus. Your Community.",
     subtitle: "Take part in shaping your student union.",
   },
   {
-    image: withBase("/images/election.jpg"),
+    image: "/images/election.jpg",
     alt: "Student union election",
     title: "Your Voice, Your Vote",
     subtitle: "A transparent digital experience for student elections.",
@@ -46,11 +42,7 @@ const slides = [
 function PublicHeader() {
   return (
     <header className="home-header">
-      <a
-        className="home-brand"
-        href={withBase("/")}
-        aria-label="DMU Bure Campus home"
-      >
+      <a className="home-brand" href="/" aria-label="DMU Bure Campus home">
         <span className="home-logo">DMU</span>
 
         <span className="home-brand-text">
@@ -60,10 +52,10 @@ function PublicHeader() {
       </a>
 
       <nav className="home-nav" aria-label="Main navigation">
-        <a href={withBase("/")}>Home</a>
-        <a href={withBase("/about")}>About</a>
-        <a href={withBase("/contact")}>Contact</a>
-        <a className="home-nav-login" href={withBase("/login")}>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a className="home-nav-login" href="/login">
           Sign in
         </a>
       </nav>
@@ -129,18 +121,12 @@ function HomePage() {
           </p>
 
           <div className="home-hero-actions">
-            <a
-              className="home-button home-button-primary"
-              href={withBase("/login")}
-            >
+            <a className="home-button home-button-primary" href="/login">
               Sign in to the system
               <span aria-hidden="true">→</span>
             </a>
 
-            <a
-              className="home-button home-button-secondary"
-              href="#platform"
-            >
+            <a className="home-button home-button-secondary" href="#platform">
               Explore the platform
             </a>
           </div>
@@ -243,10 +229,7 @@ function HomePage() {
             <p>Sign in using your student or staff account.</p>
           </div>
 
-          <a
-            className="home-button home-button-primary"
-            href={withBase("/login")}
-          >
+          <a className="home-button home-button-primary" href="/login">
             Go to sign in
             <span aria-hidden="true">→</span>
           </a>
@@ -279,10 +262,7 @@ function AboutPage() {
           managing and participating in the student union election process.
         </p>
 
-        <a
-          className="home-button home-button-primary"
-          href={withBase("/login")}
-        >
+        <a className="home-button home-button-primary" href="/login">
           Sign in to the system
           <span aria-hidden="true">→</span>
         </a>
@@ -296,13 +276,7 @@ function AboutPage() {
 function App() {
   const { user, isAuthenticated, signOut } = useAuthContext();
 
-  // Remove Vite's configured base path so the app can match its internal routes.
-  const basePath = import.meta.env.BASE_URL;
-  const pathname = window.location.pathname;
-
-  const currentPath = pathname.startsWith(basePath)
-    ? `/${pathname.slice(basePath.length)}`
-    : pathname;
+  const currentPath = window.location.pathname;
 
   // Authenticated user dashboards
   if (isAuthenticated && user) {
