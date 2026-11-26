@@ -42,7 +42,11 @@ async function request<T>(
   const requestHeaders = new Headers(headers);
   const isFormData = body instanceof FormData;
 
-  if (body !== undefined && !isFormData && !requestHeaders.has("Content-Type")) {
+  if (
+    body !== undefined &&
+    !isFormData &&
+    !requestHeaders.has("Content-Type")
+  ) {
     requestHeaders.set("Content-Type", "application/json");
   }
 
@@ -94,7 +98,10 @@ async function request<T>(
 }
 
 export const api = {
-  get<T>(path: string, options: Omit<ApiRequestOptions, "method" | "body"> = {}) {
+  get<T>(
+    path: string,
+    options: Omit<ApiRequestOptions, "method" | "body"> = {}
+  ) {
     return request<T>(path, {
       ...options,
       method: "GET",
