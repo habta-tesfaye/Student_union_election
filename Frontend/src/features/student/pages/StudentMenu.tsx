@@ -2,16 +2,16 @@
 
 export type StudentSection =
   | "dashboard"
-  //| "application"
+  | "application"
   | "nomination"
-| "nomination-response"
+  | "nomination-response"
   | "classmates"
   | "candidates"
   | "voting"
   | "results"
   | "notifications"
-    | "notices"
-  //| "feedback"
+  | "notices"
+  | "feedback"
   | "chat";
 
 interface StudentMenuProps {
@@ -25,9 +25,12 @@ const menuItems: {
   icon: string;
 }[] = [
   { id: "dashboard", label: "Dashboard", icon: "⌂" },
-  //{ id: "application", label: "My Application", icon: "▤" },
+
+  // Keep these buttons hidden.
+  // { id: "application", label: "My Application", icon: "▤" },
+
   { id: "nomination", label: "Nomination", icon: "✎" },
-    {
+  {
     id: "nomination-response",
     label: "My Nomination Response",
     icon: "✓",
@@ -36,16 +39,13 @@ const menuItems: {
   { id: "candidates", label: "Candidates", icon: "♙" },
   { id: "voting", label: "Voting", icon: "✓" },
   { id: "results", label: "Election Results", icon: "▥" },
-{ id: "notices", label: "View Notices", icon: "📢" },
-{ id: "notifications", label: "Notifications", icon: "♢" },
- // { id: "feedback", label: "Feedback", icon: "✉" },
+  { id: "notices", label: "View Notices", icon: "📢" },
+  { id: "notifications", label: "Notifications", icon: "♢" },
+
+  // { id: "feedback", label: "Feedback", icon: "✉" },
+
   { id: "chat", label: "Chat Assistant", icon: "●" },
 ];
-
-interface StudentMenuProps {
-  activeSection: StudentSection;
-  onSelect: (section: StudentSection) => void;
-}
 
 export default function StudentMenu({
   activeSection,
