@@ -2,7 +2,7 @@
 
 export type StudentSection =
   | "dashboard"
-  | "application"
+  //| "application"
   | "nomination"
 | "nomination-response"
   | "classmates"
@@ -11,7 +11,7 @@ export type StudentSection =
   | "results"
   | "notifications"
     | "notices"
-  | "feedback"
+  //| "feedback"
   | "chat";
 
 interface StudentMenuProps {
@@ -25,7 +25,7 @@ const menuItems: {
   icon: string;
 }[] = [
   { id: "dashboard", label: "Dashboard", icon: "⌂" },
-  { id: "application", label: "My Application", icon: "▤" },
+  //{ id: "application", label: "My Application", icon: "▤" },
   { id: "nomination", label: "Nomination", icon: "✎" },
     {
     id: "nomination-response",
@@ -38,7 +38,7 @@ const menuItems: {
   { id: "results", label: "Election Results", icon: "▥" },
 { id: "notices", label: "View Notices", icon: "📢" },
 { id: "notifications", label: "Notifications", icon: "♢" },
-  { id: "feedback", label: "Feedback", icon: "✉" },
+ // { id: "feedback", label: "Feedback", icon: "✉" },
   { id: "chat", label: "Chat Assistant", icon: "●" },
 ];
 

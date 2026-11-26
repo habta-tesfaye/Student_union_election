@@ -10,11 +10,11 @@ interface SidebarProps {
 const menuItems = [
   { id: "dashboard", label: "Dashboard", icon: "⌂" },
   { id: "schedules", label: "Election Schedules", icon: "▦" },
-  { id: "students", label: "Students", icon: "♙" },
-  { id: "applications", label: "Applications", icon: "▤" },
-  { id: "candidates", label: "Candidates", icon: "♟" },
-  { id: "nominations", label: "Nominations", icon: "✎" },
-  { id: "parliament", label: "Parliament", icon: "▣" },
+  //{ id: "students", label: "Students", icon: "♙" },
+  //{ id: "applications", label: "Applications", icon: "▤" },
+ // { id: "candidates", label: "Candidates", icon: "♟" },
+ // { id: "nominations", label: "Nominations", icon: "✎" },
+  //{ id: "parliament", label: "Parliament", icon: "▣" },
   { id: "results", label: "Election Results", icon: "▥" },
   { id: "notifications", label: "Notifications", icon: "♧" },
   {
